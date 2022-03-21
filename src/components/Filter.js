@@ -42,8 +42,8 @@ const Filter = () => {
 
 const Container = styled.div`
   width: 100%;
-  height: 80px;
-  padding: 20px 0;
+  height: 70px;
+  padding: 27px 0 20px 0;
 `
 const FilterList = styled.ul`
   display: flex;

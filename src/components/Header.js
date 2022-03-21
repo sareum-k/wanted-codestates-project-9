@@ -12,7 +12,7 @@ const Header = () => {
 const Container = styled.div`
   height: 50px;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 `
 const LogoBox = styled.img`
   width: 170px;
