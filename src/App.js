@@ -18,6 +18,11 @@ const App = () => {
   );
 }
 
-const MainContainer = styled.main``;
+const MainContainer = styled.main`
+  width: 414px;
+  height: 100vh;
+  margin: 0 auto;
+  background-color: #fff;
+`;
 
 export default App;
