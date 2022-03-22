@@ -50,14 +50,14 @@ const ViewTap = styled.ul`
     width: 50%;
     text-align: center;
     padding: 15px 0;
-    border-bottom: 3px solid #C4C4C4;
+    border-bottom: 2px solid #C4C4C4;
     svg{
       vertical-align: middle;
     }
   }
   .focused {
     color: black;
-    border-bottom: 3px solid black;
+    border-bottom: 2px solid black;
   }
 `
 

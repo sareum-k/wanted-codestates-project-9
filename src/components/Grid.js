@@ -9,7 +9,7 @@ const Grid = () => {
       <GridBox>
         {Dummy.map((data) => (
           <li key={data.id}>
-            <img src={data.src} />
+            <img src={data.image[0]} />
           </li>
         ))}
       </GridBox>
