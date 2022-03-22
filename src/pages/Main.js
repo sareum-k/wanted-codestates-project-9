@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components";
+import Header from "../components/Header";
+import Button from "../components/Button";
+import Filter from '../components/Filter';
+import Tab from '../components/Tab';
 
 const Main = () => {
+
   return (
-    <p>Main</p>
+    <>
+      <Header />
+      <Button >리 뷰 등 록</Button>
+      <Filter />
+      <Tab />
+    </>
   );
 }
 
