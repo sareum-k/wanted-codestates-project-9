@@ -19,7 +19,7 @@ const Filter = () => {
     }
   ]
 
-  const selectMenuHandler = (idx) => {
+  const HandleMenu = (idx) => {
     setCurrentFilter(idx)
   };
 
@@ -29,7 +29,7 @@ const Filter = () => {
         {filterList.map((el, idx) => (
           <li
             key={idx}
-            onClick={() => selectMenuHandler(idx)}
+            onClick={() => HandleMenu(idx)}
             className={`${el.type} ${currentFilter === idx ? 'focused' : ''}`}
           >
             {el.content}

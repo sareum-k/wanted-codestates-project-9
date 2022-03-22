@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
 import { FaThumbsUp } from "react-icons/fa";
 import { FiShare2 } from "react-icons/fi";
 import { ImStarFull } from "react-icons/im";
 
 const Post = ({ data }) => {
-  // console.log(data)
   const { date, like, userId, image, rating, content } = data
+  const [clicked, setClicked] = useState([false, false, false, false, false]);
+  const array = [0, 1, 2, 3, 4]
+
+  const handleClickedStar = (rating) => {
+    let clickStates = [...clicked];
+    for (let i = 0; i < rating; i++) {
+      clickStates[i] = true;
+    }
+    setClicked(clickStates);
+  };
+
+  useEffect(() => {
+    handleClickedStar(rating)
+  }, [])
+
   return (
     <>
       <Header>
@@ -23,7 +37,12 @@ const Post = ({ data }) => {
           <FiShare2 size="24" />
         </IconBox>
         <RatingBox>
-          <ImStarFull size="18" /><ImStarFull size="18" /><ImStarFull size="18" /><ImStarFull size="18" /><ImStarFull size="18" />
+          {array.map((el, idx) => (
+            <ImStarFull
+              key={idx}
+              className={clicked[el] && 'black'}
+              size="18"
+            />))}
         </RatingBox>
         <Content>{content}</Content>
       </ContentBox>
@@ -69,6 +88,12 @@ const LikeIcon = styled.div`
 `
 const RatingBox = styled.div`
   padding: 5px 15px;
+  & svg {
+    color: #C4C4C4;
+  }
+  .black {
+    color: black;
+  }
 `
 const Content = styled.p`
   padding: 0px 15px;
