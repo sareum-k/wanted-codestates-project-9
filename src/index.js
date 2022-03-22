@@ -1,9 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import '@fortawesome/fontawesome-free/js/all.js';
-import store from './store/store';
-import { Provider } from 'react-redux';
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
@@ -33,9 +30,9 @@ ul {
 `;
 
 ReactDOM.render(
-  <Provider store={store}>
+  <>
     <GlobalStyle />
     <App />
-  </Provider>,
+  </>,
   document.getElementById('root')
 );

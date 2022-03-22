@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
+import { useDispatch, useSelector } from 'react-redux';
+import { sortByDate, sortByReview, sortByRandom } from '../redux/actions';
 
 const Filter = () => {
+  const dispatch = useDispatch();
   const [currentFilter, setCurrentFilter] = useState(0);
 
   const filterList = [
@@ -10,7 +13,7 @@ const Filter = () => {
       type: 'date',
     },
     {
-      content: '좋아요 많은순',
+      content: '리뷰 많은순',
       type: 'like',
     },
     {
@@ -20,8 +23,19 @@ const Filter = () => {
   ]
 
   const HandleMenu = (idx) => {
+    if (idx === 0) {
+      dispatch(sortByDate());
+    } else if (idx === 1) {
+      dispatch(sortByReview())
+    } else if (idx === 2) {
+      dispatch(sortByRandom())
+    }
     setCurrentFilter(idx)
   };
+
+  useEffect(() => {
+    dispatch(sortByDate());
+  }, [])
 
   return (
     <Container>
@@ -49,17 +63,17 @@ const FilterList = styled.ul`
   display: flex;
   justify-content: center;
   li {
-    padding: 6px 10px;
+    padding: 6px 12px;
     line-height: 14px;
     font-size: 14px;
     color: #C4C4C4;
-    font-weight: 400;
+    font-weight: 350;
     cursor: pointer;
   }
   .focused {
-    background: #7F78D2;
+    background: #FA163F;
     color: white;
-    border-radius: 12px;
+    border-radius: 15px;
   }
 `
 

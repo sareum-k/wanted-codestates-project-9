@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from "styled-components";
-import Dummy from "../data/dummyData.json";
+import { useSelector } from 'react-redux';
 
 const Grid = () => {
-
+  const { data } = useSelector((state) => state.dataReducer)
   return (
     <Container>
       <GridBox>
-        {Dummy.map((data) => (
+        {data.map((data) => (
           <li key={data.id}>
             <img src={data.image[0]} />
           </li>
@@ -28,6 +28,7 @@ const GridBox = styled.ul`
     overflow: hidden;
     img{
       width: 137px;
+      height: 137px;
     }
   }
 `

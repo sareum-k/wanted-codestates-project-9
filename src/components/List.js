@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from "styled-components";
-import Dummy from "../data/dummyData.json";
+import { useSelector } from 'react-redux';
 import Post from "./Post";
 
 const List = () => {
+  const { data } = useSelector((state) => state.dataReducer)
   return (
     <ListBox>
-      {Dummy.map((data) => (
+      {data.map((data) => (
         <Post
           key={data.id}
           data={data}

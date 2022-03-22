@@ -3,11 +3,20 @@ import styled from "styled-components";
 import { FaThumbsUp } from "react-icons/fa";
 import { FiShare2 } from "react-icons/fi";
 import { ImStarFull } from "react-icons/im";
+import { useDispatch, useSelector } from 'react-redux';
+import { addToLike } from '../redux/actions';
 
 const Post = ({ data }) => {
-  const { date, like, userId, image, rating, content } = data
+  const { date, like, userId, image, rating, content, id } = data
+  const dispatch = useDispatch();
   const [clicked, setClicked] = useState([false, false, false, false, false]);
+  const [selected, setSelected] = useState(false)
   const array = [0, 1, 2, 3, 4]
+
+  const handleLike = (id) => {
+    setSelected(!selected)
+    dispatch(addToLike(id));
+  }
 
   const handleClickedStar = (rating) => {
     let clickStates = [...clicked];
@@ -30,8 +39,12 @@ const Post = ({ data }) => {
       <Img src={image[0]} />
       <ContentBox>
         <IconBox>
-          <LikeIcon>
-            <FaThumbsUp size="20" />
+          <LikeIcon onClick={() => handleLike(id)}>
+            {selected ?
+              <FaThumbsUp color="black"
+                size="20"
+              /> : <FaThumbsUp size="20" />
+            }
             <span>{like}</span>
           </LikeIcon>
           <FiShare2 size="24" />
@@ -81,7 +94,8 @@ const LikeIcon = styled.div`
   font-weight: 400;
   margin-right: 20px;
   font-size: 16px;
-  svg{
+  & svg{
+    cursor: pointer;
     margin-right: 10px;
     color: #C4C4C4;
   }
