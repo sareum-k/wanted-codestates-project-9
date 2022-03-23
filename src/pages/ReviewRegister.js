@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from "styled-components";
 import { BiArrowBack, BiX } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,8 @@ const ReviewRegister = () => {
   const [files, setFiles] = useState([]); //이미지 화면 띄우기
   const [image, setImage] = useState([]); //이미지 파일 server 보내기
   const fileInput = useRef(null);
+  const [clicked, setClicked] = useState([false, false, false, false, false]); // 별점 기본값 설정
+  const array = [0, 1, 2, 3, 4]   // 더미 배열을 통해 항상 별이 총 5개가 나오도록 한다.
 
   const fileHandle = (e) => {
     setImage(e.target.files[0]);
@@ -22,6 +24,23 @@ const ReviewRegister = () => {
     e.preventDefault();
     fileInput.current.click();
   };
+
+
+  const handleStarClick = index => {
+    let clickStates = [...clicked];
+    for (let i = 0; i < 5; i++) {
+      clickStates[i] = i <= index ? true : false;
+    }
+    setClicked(clickStates);
+  };
+
+  const submitReview = () => {
+    let score = clicked.filter(Boolean).length;
+  };
+
+  useEffect(() => {
+    submitReview();
+  }, [clicked]); //컨디마 컨디업
 
   // if (
   //   title === '' ||
@@ -69,7 +88,13 @@ const ReviewRegister = () => {
       <ContentBox>
         <Category>상품 별점</Category>
         <RatingBox>
-          <ImStarFull size="30" /><ImStarFull size="30" /><ImStarFull size="30" /><ImStarFull size="30" /><ImStarFull size="30" />
+          {array.map((el, idx) => (
+            <ImStarFull
+              key={idx}
+              onClick={() => handleStarClick(el)}
+              className={clicked[el] && 'black'}
+              size="35"
+            />))}
         </RatingBox>
       </ContentBox>
       <ContentBox>
@@ -147,6 +172,22 @@ const ImageInput = styled.input`
 const RatingBox = styled.div`
   width: 50%;
   margin: 0 auto;
+  & svg {
+    color: #C4C4C4;
+    cursor: pointer;
+  }
+  :hover svg {
+    color: black;
+  }
+  & svg:hover ~ svg {
+    color: #C4C4C4;
+  }
+  .black {
+    color: black;
+  }
+  .gray {
+    color: #C4C4C4;
+  }
 `
 
 export default ReviewRegister;
