@@ -18,7 +18,7 @@ const Container = styled.div`
   width: 380px;
   height: auto;
   background-color: rgba( 211, 211, 211, 0.3 );
-  padding: 20px 10px;
+  padding: 15px 13px;
   margin: 10px auto;
   border-radius: 10px;
 `
@@ -38,6 +38,7 @@ const Date = styled.p`
 `
 const Content = styled.p`
   margin-bottom: 0;
+  margin-top: 3px;
   font-size: 14px;
   line-height: 1.5;
   font-weight: 400;

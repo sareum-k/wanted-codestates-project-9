@@ -5,9 +5,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import Post from "../components/Post";
 import Comment from "../components/Comment";
+import { useNavigate } from "react-router-dom";
 
 const ReviewDetail = () => {
   const { data } = useSelector(state => state.dataReducer);
+  const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname.split('/');
   const currentId = path[path.length - 1];
@@ -17,13 +19,14 @@ const ReviewDetail = () => {
   return (
     <Container>
       <Header>
-        <BiArrowBack size="25" />
+        <BiArrowBack size="25" onClick={() => navigate('/')} />
         <MenuTitle>리뷰 상세보기</MenuTitle>
-        <BiX size="30" />
+        <BiX size="30" onClick={() => navigate('/')} />
       </Header>
       <Post data={matchedData} />
-      {matchedData.comments.map((data) => (
+      {matchedData.comments.map((data, idx) => (
         <Comment
+          key={idx}
           data={data}
         />
       ))}
@@ -49,6 +52,9 @@ const Header = styled.div`
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #C4C4C4;
+  svg{
+    cursor: pointer;
+  }
 `
 const MenuTitle = styled.p`
   font-size: 20px;
@@ -66,11 +72,11 @@ const CommentBox = styled.div`
 `
 const InputText = styled.input`
   width: 85%;
-  height: 85%;
+  height: 84%;
   margin-left: 10px;
   outline: none;
   border: none;
-  margin-top: 4px;
+  margin-top: 3px;
 `
 const SubmitBtn = styled.button`
   margin-right: 5px;
