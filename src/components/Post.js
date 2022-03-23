@@ -6,7 +6,7 @@ import { ImStarFull } from "react-icons/im";
 import { useDispatch, useSelector } from 'react-redux';
 import { addToLike } from '../redux/actions';
 
-const Post = ({ data }) => {
+const Post = ({ data, handleMovePage }) => {
   const { date, like, userId, image, rating, content, id } = data
   const dispatch = useDispatch();
   const [clicked, setClicked] = useState([false, false, false, false, false]);
@@ -26,13 +26,24 @@ const Post = ({ data }) => {
     setClicked(clickStates);
   };
 
+  const handleShareUrl = () => {
+    let dummy = document.createElement("input");
+    dummy.value = window.location.href;
+
+    document.body.appendChild(dummy);
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+    alert('클립보드 복사 완료 🙌🏻'); //추후 가능하면 모달로 변경하기
+  };
+
   useEffect(() => {
     handleClickedStar(rating)
   }, [])
 
   return (
     <>
-      <Header>
+      <Header onClick={() => handleMovePage(id)}>
         <Name>{userId}</Name>
         <Date>{date.substring(0, 9)}</Date>
       </Header>
@@ -47,7 +58,7 @@ const Post = ({ data }) => {
             }
             <span>{like}</span>
           </LikeIcon>
-          <FiShare2 size="24" />
+          <FiShare2 onClick={() => handleShareUrl()} size="24" />
         </IconBox>
         <RatingBox>
           {array.map((el, idx) => (
@@ -88,6 +99,7 @@ const ContentBox = styled.div`
 const IconBox = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 15px 15px;
 `
 const LikeIcon = styled.div`
@@ -110,11 +122,13 @@ const RatingBox = styled.div`
   }
 `
 const Content = styled.p`
+  height: auto;
   padding: 0px 15px;
   font-size: 16px;
   font-weight: 400;
   padding-bottom: 40px;
-  border-bottom: 1px solid #C4C4C4;
   margin-bottom: 0;
+  line-height: 1.5;
+  overflow: hidden;
 `
 export default Post;
