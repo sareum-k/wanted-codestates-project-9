@@ -114,7 +114,7 @@ const Content = styled.p`
   font-size: 16px;
   font-weight: 400;
   padding-bottom: 40px;
-  border-bottom: 1px solid #C4C4C4;
   margin-bottom: 0;
+  line-height: 1.5;
 `
 export default Post;

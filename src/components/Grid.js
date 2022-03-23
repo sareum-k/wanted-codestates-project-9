@@ -1,15 +1,22 @@
 import React from 'react';
 import styled from "styled-components";
 import { useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 
 const Grid = () => {
+  const navigate = useNavigate();
   const { data } = useSelector((state) => state.dataReducer)
+
+  const handleMovePage = (id) => {
+    navigate(`/detail/${id}`)
+  }
+
   return (
     <Container>
       <GridBox>
         {data.map((data) => (
           <li key={data.id}>
-            <img src={data.image[0]} />
+            <img src={data.image[0]} onClick={() => handleMovePage(data.id)} />
           </li>
         ))}
       </GridBox>
