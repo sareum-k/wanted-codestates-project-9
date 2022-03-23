@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from "styled-components";
 import { BiArrowBack, BiX } from "react-icons/bi";
 import { useSelector, useDispatch } from 'react-redux';
@@ -6,15 +6,70 @@ import { useLocation } from 'react-router-dom';
 import Post from "../components/Post";
 import Comment from "../components/Comment";
 import { useNavigate } from "react-router-dom";
+import { addToComment } from '../redux/actions';
 
 const ReviewDetail = () => {
   const { data } = useSelector(state => state.dataReducer);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const location = useLocation();
   const path = location.pathname.split('/');
   const currentId = path[path.length - 1];
+  const inputRef = useRef();
 
   const matchedData = data.find(item => item.id == currentId); // 추후 고민해서 수정하기
+
+  const onKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSubmit();
+    }
+  }
+
+  const handleSubmit = () => {
+    let value = inputRef.current.value
+    const nowDate = new Date().getTime();
+    const date = timeForToday(nowDate)
+    console.log(date) // 날짜가 이상해....
+
+    if (!value) {
+      alert('내용을 작성해주세요!')
+      return;
+    }
+
+    const newComment = {
+      userId: 'testId',
+      date: date,
+      content: value
+    }
+    dispatch(addToComment({ id: matchedData.id, newComment }));
+    inputRef.current.value = '';
+  }
+
+  const timeForToday = (time) => {
+    const today = new Date();
+    const timeValue = new Date(time);
+
+    const betweenTime = Math.floor(
+      (today.getTime() - timeValue.getTime()) / 1000 / 60
+    );
+
+    if (betweenTime <= 1) {
+      return `방금 작성`;
+    }
+    if (betweenTime < 60) {
+      return `${betweenTime}분 전`;
+    }
+
+    const betweenTimeHour = Math.floor(betweenTime / 60);
+    if (betweenTimeHour < 24) {
+      return `${betweenTimeHour}시간 전`;
+    }
+
+    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+    if (betweenTimeDay < 365) {
+      return `${betweenTimeDay}일 전`;
+    }
+  };
 
   return (
     <Container>
@@ -24,16 +79,24 @@ const ReviewDetail = () => {
         <BiX size="30" onClick={() => navigate('/')} />
       </Header>
       <Post data={matchedData} />
-      {matchedData.comments.map((data, idx) => (
-        <Comment
-          key={idx}
-          data={data}
-        />
-      ))}
+      {matchedData.comments.length > 0 &&
+        matchedData.comments.map((data, idx) => (
+          <Comment
+            key={idx}
+            data={data}
+          />
+        ))}
       <InpuutBox>
         <CommentBox>
-          <InputText placeholder="내용을 입력해주세요:)" />
-          <SubmitBtn>게시</SubmitBtn>
+          <InputText
+            type="text"
+            onKeyPress={onKeyPress}
+            ref={inputRef}
+            placeholder="내용을 입력해주세요:)"
+          />
+          <SubmitBtn onClick={handleSubmit}>
+            게시
+          </SubmitBtn>
         </CommentBox>
       </InpuutBox>
     </Container>

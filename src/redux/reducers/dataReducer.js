@@ -1,4 +1,4 @@
-import { SET_DATA, ADD_TO_LIKE, SORT_BY_DATE, SORT_BY_REVIEW, SORT_BY_RANDOM } from "../actions/index";
+import { SET_DATA, ADD_TO_LIKE, SORT_BY_DATE, SORT_BY_REVIEW, SORT_BY_RANDOM, ADD_TO_COMMENT } from "../actions/index";
 import { initialState } from "./initialState";
 
 const dataReducer = (state = initialState, action) => {
@@ -32,7 +32,7 @@ const dataReducer = (state = initialState, action) => {
       }
     }
     case ADD_TO_LIKE: {
-      const pickedReview = state.data.map((item) => {
+      const like = state.data.map((item) => {
         if (item.id === action.id) {
           return {
             ...item,
@@ -42,7 +42,23 @@ const dataReducer = (state = initialState, action) => {
           return item;
         }
       })
-      return { ...state, data: pickedReview }
+      return { ...state, data: like }
+    }
+    case ADD_TO_COMMENT: {
+      const comment = state.data.map((item) => {
+        if (item.id === action.id.id) {
+          return {
+            ...item,
+            comments: [
+              ...item.comments,
+              action.id.newComment
+            ]
+          }
+        } else {
+          return item;
+        }
+      })
+      return { ...state, data: comment }
     }
 
     default:

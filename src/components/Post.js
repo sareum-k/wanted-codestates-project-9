@@ -34,7 +34,7 @@ const Post = ({ data, handleMovePage }) => {
     dummy.select();
     document.execCommand("copy");
     document.body.removeChild(dummy);
-    alert('클립보드 복사 완료 🙌🏻');
+    alert('클립보드 복사 완료 🙌🏻'); //추후 가능하면 모달로 변경하기
   };
 
   useEffect(() => {
@@ -99,6 +99,7 @@ const ContentBox = styled.div`
 const IconBox = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 15px 15px;
 `
 const LikeIcon = styled.div`
