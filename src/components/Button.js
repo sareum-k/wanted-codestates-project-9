@@ -1,16 +1,18 @@
 import React from 'react';
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const Button = ({ children }) => {
+  const navigate = useNavigate();
   return (
-    <Container>
+    <Container onClick={() => navigate('/register')}>
       <Text>{children}</Text>
     </Container>
   );
 }
 
 const Container = styled.div`
-  width: 370px;
+  width: 100%;
   height: 35px;
   background-color: #000000;
   border-radius: 5px;
@@ -19,20 +21,12 @@ const Container = styled.div`
   padding-top: 8px;
   box-sizing: border-box;
   cursor: pointer;
-  :hover{
-    background-color: #ffffff;
-    border: 1px solid #000000;
-    color: #000000;
-  }
 `
 const Text = styled.p`
   color: #ffffff;
   font-size: 16px;
   font-weight: 500;
   margin: 0;
-  :hover{
-    color: #000000;
-  }
 `
 
 export default Button;
