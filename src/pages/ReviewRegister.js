@@ -1,30 +1,38 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from "styled-components";
-import { BiArrowBack, BiX } from "react-icons/bi";
+import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
+import { BiArrowBack, BiX } from "react-icons/bi";
 import { ImStarFull } from "react-icons/im";
 import Button from "../components/Button";
+import { addToData } from '../redux/actions';
 
 const ReviewRegister = () => {
   const navigate = useNavigate();
-  const [title, setTitle] = useState('');
-  const [text, setText] = useState('');
-  const [files, setFiles] = useState([]); //이미지 화면 띄우기
-  const [image, setImage] = useState([]); //이미지 파일 server 보내기
+  const dispatch = useDispatch();
   const fileInput = useRef(null);
+  const [content, setContent] = useState('');
+  const [files, setFiles] = useState([]); //이미지 미리보기
+  const [image, setImage] = useState([]); //이미지 파일 server 보내기
   const [clicked, setClicked] = useState([false, false, false, false, false]); // 별점 기본값 설정
   const array = [0, 1, 2, 3, 4]   // 더미 배열을 통해 항상 별이 총 5개가 나오도록 한다.
 
   const fileHandle = (e) => {
-    setImage(e.target.files[0]);
-    setFiles(URL.createObjectURL(e.target.files[0]))
+    setFiles(URL.createObjectURL(e.target.files[0])); // 이미지 미리보기
+    const imgFile = e.target.files[0];
+
+    const reader = new FileReader();
+    reader.readAsDataURL(imgFile);
+    reader.onload = () => {
+      setImage((state) => [...state, reader.result])
+    };
+    e.target.value = '';
   };
 
   const uploadImage = (e) => {
     e.preventDefault();
     fileInput.current.click();
   };
-
 
   const handleStarClick = index => {
     let clickStates = [...clicked];
@@ -34,24 +42,36 @@ const ReviewRegister = () => {
     setClicked(clickStates);
   };
 
+  const changeDate = () => {
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = ("0" + (1 + date.getMonth())).slice(-2);
+    let day = ("0" + date.getDay()).slice(-2);
+    return `${year}-${month}-${day}`;
+  }
+
   const submitReview = () => {
     let score = clicked.filter(Boolean).length;
+    const randomId = Math.ceil(Math.random() * 10000000).toString()
+    const date = changeDate()
+
+    if (score.length === 0 || content.length === 0 || image.length === 0) {
+      alert('모두 입력해주세요!')
+      return;
+    }
+
+    dispatch(addToData({
+      id: randomId,
+      userId: 'testId',
+      date: date,
+      image: image,
+      rating: score,
+      content: content,
+      like: 0,
+      comments: []
+    }))
+    navigate('/')
   };
-
-  useEffect(() => {
-    submitReview();
-  }, [clicked]); //컨디마 컨디업
-
-  // if (
-  //   title === '' ||
-  //   text === '' ||
-  //   category === '' ||
-  //   image.length === 0 ||
-  //   content_id.length === 0
-  // ) {
-  //   dispatch(setMessageModal(true, '빈 항목이 있습니다.'));
-  //   return;
-  // }
 
   return (
     <Container>
@@ -61,12 +81,13 @@ const ReviewRegister = () => {
         <BiX size="30" onClick={() => navigate('/')} />
       </Header>
       <ContentBox>
-        <Category>제목</Category>
-        <TitleInput type="text" placeholder="리뷰 제목을 입력해주세요." />
-      </ContentBox>
-      <ContentBox>
         <Category>내용</Category>
-        <ContentInput type="text" placeholder="내용을 입력해주세요." />
+        <ContentInput
+          type="text"
+          placeholder="내용을 입력해주세요."
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+        />
       </ContentBox>
       <ContentBox>
         <ImageBtnBox>
@@ -97,7 +118,7 @@ const ReviewRegister = () => {
             />))}
         </RatingBox>
       </ContentBox>
-      <ContentBox>
+      <ContentBox onClick={submitReview}>
         <Button>등록하기</Button>
       </ContentBox>
     </Container>
@@ -129,12 +150,6 @@ const ContentBox = styled.div`
 const Category = styled.h3`
   margin: 0;
   margin-bottom: 7px;
-`
-const TitleInput = styled.input`
-  width: 100%;
-  height: 40px;
-  padding-left: 5px;
-  border: 1px solid black;
 `
 const ContentInput = styled.input`
   width: 100%;

@@ -45,7 +45,7 @@ const Post = ({ data, handleMovePage }) => {
     <>
       <Header onClick={() => handleMovePage(id)}>
         <Name>{userId}</Name>
-        <Date>{date.substring(0, 9)}</Date>
+        <Date>{date.substring(0, 10)}</Date>
       </Header>
       <Img src={image[0]} />
       <ContentBox>

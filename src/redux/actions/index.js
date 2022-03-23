@@ -1,6 +1,7 @@
 export const SET_DATA = "SET_DATA";
 export const ADD_TO_LIKE = "ADD_TO_LIKE";
 export const ADD_TO_COMMENT = "ADD_TO_COMMENT";
+export const ADD_TO_DATA = "ADD_TO_DATA";
 export const SORT_BY_DATE = "SORT_BY_DATE";
 export const SORT_BY_REVIEW = "SORT_BY_REVIEW";
 export const SORT_BY_RANDOM = "SORT_BY_RANDOM";
@@ -35,5 +36,11 @@ export const addToComment = (id) => {
   return {
     type: ADD_TO_COMMENT,
     id
+  }
+}
+export const addToData = (post) => {
+  return {
+    type: ADD_TO_DATA,
+    post
   }
 }
