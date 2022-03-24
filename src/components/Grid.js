@@ -1,21 +1,54 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from "styled-components";
 import { useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 
 const Grid = () => {
   const navigate = useNavigate();
-  const { data } = useSelector((state) => state.dataReducer)
-  console.log(data)
+  const { data, filterIdx } = useSelector((state) => state.dataReducer)
+  const targetRef = useRef(null);
+  const observerRef = React.useRef();
+  const [reviews, setReviews] = useState(data.slice(0, 15));
+  const [reviewsPage, setReviewsPage] = useState(1);
+  // const [sortOption, setSortOption] = useState(filterIdx);
+
   const handleMovePage = (id) => {
     navigate(`/detail/${id}`)
   }
 
+  // useEffect(() => {
+  //   observerRef.current = new IntersectionObserver(intersectionObserver);
+  //   targetRef.current && observerRef.current.observe(targetRef.current);
+  // }, [reviews]);
+
+  // const getData = () => {
+  //   if (data.length >= reviewsPage * 15) {
+  //     const additionalData = data.slice(reviewsPage * 15, (reviewsPage + 1) * 15);
+  //     setReviewsPage((reviewsPage) => reviewsPage + 1);
+  //     setReviews([...reviews, ...additionalData]);
+  //   }
+  // };
+
+  // const intersectionObserver = (entries, io) => {
+  //   entries.forEach((entry) => {
+  //     if (entry.isIntersecting) {
+  //       io.unobserve(entry.target);
+  //       getData();
+  //     }
+  //   });
+  // };
+
+  useEffect(() => {
+    window.onbeforeunload = function pushRefresh() {
+      window.scrollTo(0, 0);
+    };
+  }, []);
+
   return (
     <Container>
       <GridBox>
-        {data.map((data) => (
-          <li key={data.id}>
+        {data.map((data, idx) => (
+          <li ref={targetRef} key={idx}>
             <img src={data.image[0]} onClick={() => handleMovePage(data.id)} />
           </li>
         ))}

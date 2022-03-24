@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
 import { BsGrid3X3, BsViewList } from 'react-icons/bs';
-import Grid from "../components/Grid";
-import List from "../components/List";
+import Grid from "./Grid";
+import List from "./List";
+import Filter from "./Filter";
 
 const Tab = () => {
   const [currentTab, setCurrentTab] = useState(0);
@@ -22,6 +23,7 @@ const Tab = () => {
 
   return (
     <Container>
+      <Filter />
       <ViewTap>
         {TapList.map((el, idx) => (
           <li
