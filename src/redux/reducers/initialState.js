@@ -3,5 +3,6 @@ import { data } from "../../data/dummyData";
 export const initialState =
 {
   data,
-  filterIdx: 0
+  filterIdx: 0,
+  isChecked: false
 };

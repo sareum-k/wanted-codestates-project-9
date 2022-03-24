@@ -34,9 +34,18 @@ const dataReducer = (state = initialState, action) => {
     case ADD_TO_LIKE: {
       const like = state.data.map((item) => {
         if (item.id === action.id) {
-          return {
-            ...item,
-            like: Number(item.like) + 1
+          if (item.isClicked === true) {
+            return {
+              ...item,
+              like: Number(item.like) - 1,
+              isClicked: false,
+            };
+          } else {
+            return {
+              ...item,
+              like: Number(item.like) + 1,
+              isClicked: true,
+            }
           }
         } else {
           return item;
@@ -66,7 +75,6 @@ const dataReducer = (state = initialState, action) => {
       });
     }
     case GET_FILTER: {
-      // console.log(state.idx)
       return Object.assign({}, state, {
         filterIdx: action.idx
       });
