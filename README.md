@@ -50,7 +50,7 @@ $ npm install
 3. `start` the project
 
 ```
-$ npm run serve
+$ npm run start
 ```
 ### <br/>
 ## 🛍 Commit Emoji
