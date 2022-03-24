@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Grid = () => {
   const navigate = useNavigate();
   const { data } = useSelector((state) => state.dataReducer)
-
+  console.log(data)
   const handleMovePage = (id) => {
     navigate(`/detail/${id}`)
   }
