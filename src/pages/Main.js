@@ -1,20 +1,23 @@
 import React from 'react';
 import Header from "../components/Header";
 import Button from "../components/Button";
-import Filter from '../components/Filter';
 import Tab from '../components/Tab';
-import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 const Main = () => {
-  const navigate = useNavigate();
   return (
     <>
       <Header />
-      <Button>리 뷰 등 록</Button>
-      <Filter />
+      <Box>
+        <Button>리 뷰 등 록</Button>
+      </Box>
       <Tab />
     </>
   );
 }
+
+const Box = styled.div`
+  padding: 0 15px;
+`
 
 export default Main;

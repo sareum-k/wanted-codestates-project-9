@@ -5,6 +5,7 @@ export const ADD_TO_DATA = "ADD_TO_DATA";
 export const SORT_BY_DATE = "SORT_BY_DATE";
 export const SORT_BY_REVIEW = "SORT_BY_REVIEW";
 export const SORT_BY_RANDOM = "SORT_BY_RANDOM";
+export const GET_FILTER = "GET_FILTER";
 
 export const setData = () => {
   return {
@@ -42,5 +43,11 @@ export const addToData = (post) => {
   return {
     type: ADD_TO_DATA,
     post
+  }
+}
+export const getFilter = (idx) => {
+  return {
+    type: GET_FILTER,
+    idx
   }
 }
