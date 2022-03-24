@@ -1,4 +1,4 @@
-import { SET_DATA, ADD_TO_LIKE, SORT_BY_DATE, SORT_BY_REVIEW, SORT_BY_RANDOM, ADD_TO_COMMENT, ADD_TO_DATA } from "../actions/index";
+import { SET_DATA, ADD_TO_LIKE, SORT_BY_DATE, SORT_BY_REVIEW, SORT_BY_RANDOM, ADD_TO_COMMENT, ADD_TO_DATA, GET_FILTER } from "../actions/index";
 import { initialState } from "./initialState";
 
 const dataReducer = (state = initialState, action) => {
@@ -63,6 +63,12 @@ const dataReducer = (state = initialState, action) => {
     case ADD_TO_DATA: {
       return Object.assign({}, state, {
         data: [...state.data, action.post]
+      });
+    }
+    case GET_FILTER: {
+      // console.log(state.idx)
+      return Object.assign({}, state, {
+        filterIdx: action.idx
       });
     }
 

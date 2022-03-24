@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import { useDispatch, useSelector } from 'react-redux';
-import { sortByDate, sortByReview, sortByRandom } from '../redux/actions';
+import { sortByDate, sortByReview, sortByRandom, getFilter } from '../redux/actions';
 
 const Filter = () => {
   const dispatch = useDispatch();
@@ -25,10 +25,13 @@ const Filter = () => {
   const HandleMenu = (idx) => {
     if (idx === 0) {
       dispatch(sortByDate());
+      dispatch(getFilter(idx))
     } else if (idx === 1) {
       dispatch(sortByReview())
+      dispatch(getFilter(idx))
     } else if (idx === 2) {
       dispatch(sortByRandom())
+      dispatch(getFilter(idx))
     }
     setCurrentFilter(idx)
   };
